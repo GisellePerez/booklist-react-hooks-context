@@ -2,7 +2,8 @@ import React, { useState, useContext } from 'react';
 import { BookContext } from '../context/BooksContext';
 
 const BookForm = () => {
-    const {addNewBook} = useContext(BookContext);
+    // const {addNewBook} = useContext(BookContext);
+    const { dispatch } = useContext(BookContext);
 
     const [title, setTitle] = useState('');
     const [author, setAuthor] = useState('');
@@ -15,9 +16,16 @@ const BookForm = () => {
         setAuthor(event.target.value);
     }
 
-    const adBookHandler = (event) => {
+    const addBookHandler = (event) => {
         event.preventDefault();
-        addNewBook(title, author);
+        // addNewBook(title, author);
+        dispatch({
+            type: 'ADD_BOOK',
+            book: {
+                title, 
+                author
+            }
+        });
         setTitle('');
         setAuthor('');
     }
@@ -36,7 +44,7 @@ const BookForm = () => {
                 onChange={(event) => getAuthorHandler(event)} 
             />
 
-            <button onClick={(event) => adBookHandler(event)}>Add book</button>
+            <button onClick={(event) => addBookHandler(event)}>Add book</button>
         </form>
     );
 }
